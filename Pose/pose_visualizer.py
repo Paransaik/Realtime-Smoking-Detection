@@ -37,15 +37,16 @@ class TfPoseVisualizer:
 
         for human in humans:
             xs, ys, centers = [], [], {}
-            # 将所有关节点绘制到图像上
+            # 모든 관절을 그림에 그립니다
             for i in range(CocoPart.Background.value):
                 if i not in human.body_parts.keys():
 
-                    # 对于缺失的数据，补0
+                    # 누락된 데이터에 대해 0을 보충합니다.
                     record_joints_norm += [0.0, 0.0]
                     continue
 
                 body_part = human.body_parts[i]
+                print(body_part.x)
                 center_x = body_part.x * image_w + 0.5
                 center_y = body_part.y * image_h + 0.5
                 center = (int(center_x), int(center_y))
@@ -55,27 +56,28 @@ class TfPoseVisualizer:
 
                 xs.append(center[0])
                 ys.append(center[1])
-                # 绘制关节点
-                cv.circle(npimg, center, 3, CocoColors[i], thickness=TfPoseVisualizer.Thickness_ratio * 2,
-                          lineType=8, shift=0)
-            # 将属于同一人的关节点按照各个部位相连
+                # 관절점 그리기
+                # cv.circle(img,, center, radius, color[, thickness[, lineType[, shift]]])
+                cv.circle(npimg, center, 3, CocoColors[i], thickness=TfPoseVisualizer.Thickness_ratio * 2, lineType=8, shift=0)
+
+            # 같은 사람만의 관절을 부위별로 연결한다
             for pair_order, pair in enumerate(CocoPairsRender):
                 if pair[0] not in human.body_parts.keys() or pair[1] not in human.body_parts.keys():
                     continue
                 cv.line(npimg, centers[pair[0]], centers[pair[1]], CocoColors[pair_order],
                         thickness=TfPoseVisualizer.Thickness_ratio, lineType=8, shift=0)
 
-            # 根据每个人的关节点信息生成ROI区域
+            # 개개인의 관절점 정보에 따른 ROI 영역 생성
             tl_x = min(xs)
             tl_y = min(ys)
             width = max(xs) - min(xs)
             height = max(ys) - min(ys)
             bboxes.append([tl_x, tl_y, width, height])
 
-            # 记录每一帧的所有关节点
+            #  프레임의 모든 관절을 기록한다
             joints.append(centers)
 
-            # 记录coco的1号点作为xcenter
+            # coco의 1번 포인트를 xcenter로 기록하기
             if 1 in centers:
                 xcenter.append(centers[1][0])
         return npimg, joints, bboxes, xcenter, record_joints_norm
