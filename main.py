@@ -9,7 +9,7 @@ from Pose.pose_visualizer import TfPoseVisualizer
 from Action.recognizer import load_action_premodel, framewise_recognize
 
 parser = argparse.ArgumentParser(description='Action Recognition by OpenPose')
-parser.add_argument('--video', help='Path to video file.', default=os.path.basename("/C:/Users/haram/PycharmProjects/Online-Realtime-Action-Recognition-based-on-OpenPose-master/test.mp4"))
+parser.add_argument('--video', help='Path to video file.', default=os.path.basename("/C:/Users/haram/PycharmProjects/Online-Realtime-Action-Recognition-based-on-OpenPose-master/tt.jpg"))
 args = parser.parse_args()
 
 # 导入相关模型

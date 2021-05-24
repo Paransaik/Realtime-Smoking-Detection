@@ -6,11 +6,15 @@ import tensorflow as tf
 from .coco_format import CocoPart, CocoColors, CocoPairsRender
 from .pose_estimator import estimate
 
+x = []
+y = []
+r = []
+
 
 class TfPoseVisualizer:
     # the thickness of showing skeleton
     Thickness_ratio = 2
-
+    result = 0
     def __init__(self, graph_path, target_size=(368, 368)):
         self.target_size = target_size
         # load graph
@@ -39,6 +43,8 @@ class TfPoseVisualizer:
         for human in humans:
             xs, ys, centers = [], [], {}
             # 모든 관절을 그림에 그립니다
+            xLine = [0 for i in range(18)]
+            yLine = [0 for i in range(18)]
             for i in range(CocoPart.Background.value):
                 if i not in human.body_parts.keys():
 
@@ -61,9 +67,23 @@ class TfPoseVisualizer:
                 # cv.circle(img,, center, radius, color[, thickness[, lineType[, shift]]])
                 cv.circle(npimg, center, 3, CocoColors[i], thickness=TfPoseVisualizer.Thickness_ratio * 2, lineType=8, shift=0)
 
-                print(i, center_x)
+                xLine[i] = center_x
+                yLine[i] = center_y
+                print(xLine)
 
+            x.append(xLine)
+            y.append(yLine)
 
+            for i in range(len(x)):
+                if (x[i][0] == 0) or (x[i][4] == 0):
+                    break;
+                else:
+                    result = (((x[i][0] - x[i][4]) ** 2) + ((y[i][0] - y[i][4]) ** 2)) ** 0.5
+                    print((x[i][0] - x[i][4]))
+                    print((y[i][0] - y[i][4]))
+
+                    r.append(result)
+            print(r)
 
             # 같은 사람만의 관절을 부위별로 연결한다
             for pair_order, pair in enumerate(CocoPairsRender):
