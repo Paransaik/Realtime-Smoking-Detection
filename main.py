@@ -44,6 +44,7 @@ while cv.waitKey(1) < 0:
         # get pose info
         pose = TfPoseVisualizer.draw_pose_rgb(show, humans)  # return frame, joints, bboxes, xcenter, record_joints_norm, center
 
+        print(pose[5])
         #객체 수 많큼 반복
         #for i in range(len(pose[2])):
             # pose[2][i][3]*0.1

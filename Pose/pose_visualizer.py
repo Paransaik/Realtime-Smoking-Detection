@@ -105,7 +105,7 @@ class TfPoseVisualizer:
             # coco의 1번 포인트를 xcenter로 기록하기
             if 1 in centers:
                 xcenter.append(centers[1][0])
-        return npimg, joints, bboxes, xcenter, record_joints_norm
+        return npimg, joints, bboxes, xcenter, record_joints_norm, r
 
     @staticmethod
     def draw_pose_only(npimg, humans):
