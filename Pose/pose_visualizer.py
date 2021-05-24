@@ -2,6 +2,7 @@
 import cv2 as cv
 import numpy as np
 import tensorflow as tf
+
 from .coco_format import CocoPart, CocoColors, CocoPairsRender
 from .pose_estimator import estimate
 
@@ -46,7 +47,7 @@ class TfPoseVisualizer:
                     continue
 
                 body_part = human.body_parts[i]
-                print(body_part.x)
+
                 center_x = body_part.x * image_w + 0.5
                 center_y = body_part.y * image_h + 0.5
                 center = (int(center_x), int(center_y))
@@ -59,6 +60,10 @@ class TfPoseVisualizer:
                 # 관절점 그리기
                 # cv.circle(img,, center, radius, color[, thickness[, lineType[, shift]]])
                 cv.circle(npimg, center, 3, CocoColors[i], thickness=TfPoseVisualizer.Thickness_ratio * 2, lineType=8, shift=0)
+
+                print(i, center_x)
+
+
 
             # 같은 사람만의 관절을 부위별로 연결한다
             for pair_order, pair in enumerate(CocoPairsRender):
