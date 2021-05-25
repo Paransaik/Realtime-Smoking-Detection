@@ -9,7 +9,7 @@ from Pose.pose_visualizer import TfPoseVisualizer
 from Action.recognizer import load_action_premodel, framewise_recognize
 
 parser = argparse.ArgumentParser(description='Action Recognition by OpenPose')
-parser.add_argument('--video', help='Path to video file.', default=os.path.basename("/C:/Users/haram/PycharmProjects/Online-Realtime-Action-Recognition-based-on-OpenPose-master/tt.jpg"))
+parser.add_argument('--video', help='Path to video file.', default=os.path.basename("/C:/Users/haram/PycharmProjects/Online-Realtime-Action-Recognition-based-on-OpenPose-master/tabaco1.mp4"))
 args = parser.parse_args()
 
 # 导入相关模型
@@ -44,11 +44,12 @@ while cv.waitKey(1) < 0:
         # get pose info
         pose = TfPoseVisualizer.draw_pose_rgb(show, humans)  # return frame, joints, bboxes, xcenter, record_joints_norm, center
 
-        print(pose[5])
+
         #객체 수 많큼 반복
-        #for i in range(len(pose[2])):
-            # pose[2][i][3]*0.1
-        #print(pose[5])
+        for i in range(len(pose[2])):
+            print(pose[5])
+            print(pose[2][i][3]*0.1)
+
         # recognize the action framewise
         show = framewise_recognize(pose, action_classifier)
 

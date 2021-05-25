@@ -41,9 +41,12 @@ class TfPoseVisualizer:
 
         for human in humans:
             xs, ys, centers = [], [], {}
-            # 모든 관절을 그림에 그립니다
+
+            # x, y 좌표를 얻기 위한 list
             xLine = [0 for i in range(18)]
             yLine = [0 for i in range(18)]
+
+            # 모든 관절을 그림에 그립니다
             for i in range(CocoPart.Background.value):
                 if i not in human.body_parts.keys():
 
@@ -66,9 +69,9 @@ class TfPoseVisualizer:
                 # cv.circle(img,, center, radius, color[, thickness[, lineType[, shift]]])
                 cv.circle(npimg, center, 3, CocoColors[i], thickness=TfPoseVisualizer.Thickness_ratio * 2, lineType=8, shift=0)
 
+                ####################################
                 xLine[i] = center_x
                 yLine[i] = center_y
-                print(xLine)
 
             x.append(xLine)
             y.append(yLine)
@@ -78,10 +81,10 @@ class TfPoseVisualizer:
                     break;
                 else:
                     result = (((x[i][0] - x[i][4]) ** 2) + ((y[i][0] - y[i][4]) ** 2)) ** 0.5
-                    print((x[i][0] - x[i][4]))
-                    print((y[i][0] - y[i][4]))
-
+                    #print((x[i][0] - x[i][4]))
+                    #print((y[i][0] - y[i][4]))
                     r.append(result)
+            ##########################
             print(r)
 
             # 같은 사람만의 관절을 부위별로 연결한다
