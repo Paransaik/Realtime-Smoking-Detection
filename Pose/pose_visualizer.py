@@ -13,7 +13,9 @@ r = []
 class TfPoseVisualizer:
     # the thickness of showing skeleton
     Thickness_ratio = 2
-    result = 0
+    Lresult = 0
+    Rresult = 0
+
     def __init__(self, graph_path, target_size=(368, 368)):
         self.target_size = target_size
         # load graph
@@ -80,10 +82,19 @@ class TfPoseVisualizer:
                 if (x[i][0] == 0) or (x[i][4] == 0):
                     break;
                 else:
-                    result = (((x[i][0] - x[i][4]) ** 2) + ((y[i][0] - y[i][4]) ** 2)) ** 0.5
+                    Rresult = (((x[i][4] - x[i][2]) ** 2) + ((y[i][4] - y[i][2]) ** 2)) ** 0.5
+                    Lresult = (((x[i][7] - x[i][5]) ** 2) + ((y[i][7] - y[i][5]) ** 2)) ** 0.5
+
+                    if Rresult >= Lresult:
+                        r.append(i)
+                        r.append(Lresult)
+                    else:
+                        r.append(i)
+                        r.append(Rresult)
+
                     #print((x[i][0] - x[i][4]))
                     #print((y[i][0] - y[i][4]))
-                    r.append(result)
+
             ##########################
             print(r)
 

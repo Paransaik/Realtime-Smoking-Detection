@@ -46,9 +46,9 @@ while cv.waitKey(1) < 0:
 
 
         #객체 수 많큼 반복
-        for i in range(len(pose[2])):
-            print(pose[5])
-            print(pose[2][i][3]*0.1)
+        # for i in range(len(pose[2])):
+        #     print(pose[5])
+        #     print(pose[2][i][3]*0.1)
 
         # recognize the action framewise
         show = framewise_recognize(pose, action_classifier)
