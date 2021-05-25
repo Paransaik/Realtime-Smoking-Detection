@@ -10,7 +10,6 @@ x = []
 y = []
 r = []
 
-
 class TfPoseVisualizer:
     # the thickness of showing skeleton
     Thickness_ratio = 2
