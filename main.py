@@ -45,11 +45,12 @@ while cv.waitKey(1) < 0:
         pose = TfPoseVisualizer.draw_pose_rgb(show, humans)  # return frame, joints, bboxes, xcenter, record_joints_norm, center
 
 
-        #객체 수 많큼 반복
-        # for i in range(len(pose[2])):
-        #     print(pose[5])
-        #     print(pose[2][i][3]*0.1)
-
+        # 객체 수 많큼 반복
+        # pose[2][i] = [tl_x, tl_y, width, height]
+        for i in range(len(pose[2])):
+            #print(pose[5][i]) # 어깨와 손목 사이의 거리
+            print(pose[2][i][3]*0.1) # 높이의 10% 값
+            print(pose[2][i])
         # recognize the action framewise
         show = framewise_recognize(pose, action_classifier)
 
