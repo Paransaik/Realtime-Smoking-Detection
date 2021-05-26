@@ -6,15 +6,11 @@ import tensorflow as tf
 from .coco_format import CocoPart, CocoColors, CocoPairsRender
 from .pose_estimator import estimate
 
-x = []
-y = []
-r = []
+
 
 class TfPoseVisualizer:
     # the thickness of showing skeleton
     Thickness_ratio = 2
-    Lresult = 0
-    Rresult = 0
 
     def __init__(self, graph_path, target_size=(368, 368)):
         self.target_size = target_size
@@ -40,16 +36,19 @@ class TfPoseVisualizer:
 
         # for record and get dataset
         record_joints_norm = []
-
+        r = []
         for human in humans:
             xs, ys, centers = [], [], {}
+            x = []
+            y = []
 
             # x, y 좌표를 얻기 위한 list
-            xLine = [0 for i in range(18)]
-            yLine = [0 for i in range(18)]
+            xline = [0 for i in range(18)]
+            yline = [0 for i in range(18)]
 
             # 모든 관절을 그림에 그립니다
             for i in range(CocoPart.Background.value):
+
                 if i not in human.body_parts.keys():
 
                     # 누락된 데이터에 대해 0을 보충합니다.
@@ -72,31 +71,31 @@ class TfPoseVisualizer:
                 cv.circle(npimg, center, 3, CocoColors[i], thickness=TfPoseVisualizer.Thickness_ratio * 2, lineType=8, shift=0)
 
                 ####################################
-                xLine[i] = center_x
-                yLine[i] = center_y
+                xline[i] = center_x
+                yline[i] = center_y
 
-            x.append(xLine)
-            y.append(yLine)
+            x.append(xline)
+            y.append(yline)
 
             for i in range(len(x)):
-                if (x[i][0] == 0) or (x[i][4] == 0):
-                    break;
+                if (x[i][2] == 0) or (x[i][4] == 0):
+                    break
                 else:
-                    Rresult = (((x[i][4] - x[i][2]) ** 2) + ((y[i][4] - y[i][2]) ** 2)) ** 0.5
-                    Lresult = (((x[i][7] - x[i][5]) ** 2) + ((y[i][7] - y[i][5]) ** 2)) ** 0.5
+                    rresult = (((x[i][4] - x[i][2]) ** 2) + ((y[i][4] - y[i][2]) ** 2)) ** 0.5
 
-                    if Rresult >= Lresult:
-                        r.append(i)
-                        r.append(Lresult)
-                    else:
-                        r.append(i)
-                        r.append(Rresult)
+                if (x[i][5] == 0) or (x[i][7] == 0):
+                    break
+                else:
+                    lresult = (((x[i][7] - x[i][5]) ** 2) + ((y[i][7] - y[i][5]) ** 2)) ** 0.5
 
-                    #print((x[i][0] - x[i][4]))
-                    #print((y[i][0] - y[i][4]))
-
+                if rresult >= lresult:
+                    #r.append(i)
+                    r.append(lresult)
+                else:
+                    #r.append(i)
+                    r.append(rresult)
             ##########################
-            print(r)
+
 
             # 같은 사람만의 관절을 부위별로 연결한다
             for pair_order, pair in enumerate(CocoPairsRender):
@@ -118,6 +117,7 @@ class TfPoseVisualizer:
             # coco의 1번 포인트를 xcenter로 기록하기
             if 1 in centers:
                 xcenter.append(centers[1][0])
+
         return npimg, joints, bboxes, xcenter, record_joints_norm, r
 
     @staticmethod

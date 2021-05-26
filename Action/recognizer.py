@@ -132,8 +132,7 @@ def framewise_recognize(pose, pretrained_model):
             cv.putText(frame, trk_id, (int(bbox[0]), int(bbox[1]-45)), cv.FONT_HERSHEY_SIMPLEX, 0.8, trk_clr, 3)
 
             trk_True = 'smoking-'
-            cv.putText(frame, trk_True, (int(bbox[0]), int(bbox[1])), cv.FONT_HERSHEY_SIMPLEX, 0.8, trk_clr,3)
-        # 흡연 유무 전달
+            cv.putText(frame, trk_True, (int(bbox[0]), int(bbox[1])), cv.FONT_HERSHEY_SIMPLEX, 0.8, trk_clr, 3)
 
         for d in trk_result:
             xmin = int(d[0])
@@ -165,4 +164,3 @@ def framewise_recognize(pose, pretrained_model):
             # 트랙킹 박스
             cv.rectangle(frame, (xmin - 10, ymin - 30), (xmax + 10, ymax), trk_clr, 2)
     return frame
-
