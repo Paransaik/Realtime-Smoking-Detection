@@ -101,7 +101,7 @@ def load_action_premodel(model):
 
 def framewise_recognize(pose, pretrained_model):
     frame, joints, bboxes, xcenter = pose[0], pose[1], pose[2], pose[3]
-    joints_norm_per_frame = np.array(pose[-1])
+    joints_norm_per_frame = np.array(pose[-2])
 
     if bboxes:
         bboxes = np.array(bboxes)
@@ -131,8 +131,8 @@ def framewise_recognize(pose, pretrained_model):
             trk_id = 'ID-' + str(trk.track_id)
             cv.putText(frame, trk_id, (int(bbox[0]), int(bbox[1]-45)), cv.FONT_HERSHEY_SIMPLEX, 0.8, trk_clr, 3)
 
-            trk_True = 'smoking-'
-            cv.putText(frame, trk_True, (int(bbox[0]), int(bbox[1])), cv.FONT_HERSHEY_SIMPLEX, 0.8, trk_clr, 3)
+            # trk_True = 'smoking-'
+            # cv.putText(frame, trk_True, (int(bbox[0]), int(bbox[1])), cv.FONT_HERSHEY_SIMPLEX, 0.8, trk_clr, 3)
 
         for d in trk_result:
             xmin = int(d[0])

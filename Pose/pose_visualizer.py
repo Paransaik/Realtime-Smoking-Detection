@@ -36,12 +36,13 @@ class TfPoseVisualizer:
 
         # for record and get dataset
         record_joints_norm = []
-        r = []
+
+        x = []
+        y = []
+
         for human in humans:
             xs, ys, centers = [], [], {}
-            x = []
-            y = []
-
+            r = []
             # x, y 좌표를 얻기 위한 list
             xline = [0 for i in range(18)]
             yline = [0 for i in range(18)]
@@ -66,6 +67,7 @@ class TfPoseVisualizer:
 
                 xs.append(center[0])
                 ys.append(center[1])
+
                 # 관절점 그리기
                 # cv.circle(img,, center, radius, color[, thickness[, lineType[, shift]]])
                 cv.circle(npimg, center, 3, CocoColors[i], thickness=TfPoseVisualizer.Thickness_ratio * 2, lineType=8, shift=0)
@@ -81,19 +83,18 @@ class TfPoseVisualizer:
                 if (x[i][2] == 0) or (x[i][4] == 0):
                     break
                 else:
-                    rresult = (((x[i][4] - x[i][2]) ** 2) + ((y[i][4] - y[i][2]) ** 2)) ** 0.5
+                    rresu = (((x[i][4] - x[i][2]) ** 2) + ((y[i][4] - y[i][2]) ** 2)) ** 0.5
 
                 if (x[i][5] == 0) or (x[i][7] == 0):
                     break
                 else:
-                    lresult = (((x[i][7] - x[i][5]) ** 2) + ((y[i][7] - y[i][5]) ** 2)) ** 0.5
+                    lresu = (((x[i][7] - x[i][5]) ** 2) + ((y[i][7] - y[i][5]) ** 2)) ** 0.5
 
-                if rresult >= lresult:
-                    #r.append(i)
-                    r.append(lresult)
+                if rresu > lresu:
+                    r.append(lresu)
                 else:
-                    #r.append(i)
-                    r.append(rresult)
+                    r.append(rresu)
+
             ##########################
 
 
@@ -117,7 +118,8 @@ class TfPoseVisualizer:
             # coco의 1번 포인트를 xcenter로 기록하기
             if 1 in centers:
                 xcenter.append(centers[1][0])
-        #print(r)
+        # print(r)
+
         return npimg, joints, bboxes, xcenter, record_joints_norm, r
 
     @staticmethod
