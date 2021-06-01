@@ -80,15 +80,19 @@ class TfPoseVisualizer:
             y.append(yline)
 
             for i in range(len(x)):
-                if (x[i][2] == 0) or (x[i][4] == 0):
+                # 4 오른손목
+                if (x[i][0] == 0) or (x[i][4] == 0):
+                    r.append(99999)
                     break
                 else:
-                    rresu = (((x[i][4] - x[i][2]) ** 2) + ((y[i][4] - y[i][2]) ** 2)) ** 0.5
+                    rresu = (((x[i][4] - x[i][0]) ** 2) + ((y[i][4] - y[i][0]) ** 2)) ** 0.5
 
+                # 7 왼쪽손목
                 if (x[i][5] == 0) or (x[i][7] == 0):
+                    r.append(99999)
                     break
                 else:
-                    lresu = (((x[i][7] - x[i][5]) ** 2) + ((y[i][7] - y[i][5]) ** 2)) ** 0.5
+                    lresu = (((x[i][7] - x[i][0]) ** 2) + ((y[i][7] - y[i][0]) ** 2)) ** 0.5
 
                 if rresu > lresu:
                     r.append(lresu)

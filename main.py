@@ -10,7 +10,7 @@ from Action.recognizer import load_action_premodel, framewise_recognize
 
 parser = argparse.ArgumentParser(description='Action Recognition by OpenPose')
 parser.add_argument('--video', help='Path to video file.',
-    default=os.path.basename("/C:/Users/haram/PycharmProjects/Online-Realtime-Action-Recognition-based-on-OpenPose-master/tabaco1.mp4"))
+    default=os.path.basename("/C:/Users/haram/PycharmProjects/Online-Realtime-Action-Recognition-based-on-OpenPose-master/tabaco2.mp4"))
 args = parser.parse_args()
 
 # 导入相关模型
@@ -29,7 +29,7 @@ frame_count = 0
 cap = choose_run_mode(args)
 video_writer = set_video_writer(cap, write_fps=int(7.0))
 
-
+nb = 0;
 # # 保存关节数据的txt文件，用于训练过程(for training)
 # f = open('origin_data.txt', 'a+')
 
@@ -47,9 +47,9 @@ while cv.waitKey(1) < 0:
         # 객체 수 많큼 반복
         # pose[2][i] = [tl_x, tl_y, width, height]
         for i in range(len(pose[2])):
-            # print(pose[5][i]) # 어깨와 손목 사이의 거리
-            # print(pose[2][i][2]*0.4) # 높이의 10% 값
-            if (pose[2][i][2]*0.4) > (pose[5][i]):
+            print(nb, pose[5][i]) # 어깨와 손목 사이의 거리
+            print(nb, pose[2][i][3]*0.28) # 높이의 10% 값
+            if (pose[2][i][3]*0.28) > (pose[5][i]):
                 print(1)
             else:
                 print(0)
@@ -85,6 +85,7 @@ while cv.waitKey(1) < 0:
         # joints_norm_per_frame = np.array(pose[-1]).astype(np.str)
         # f.write(' '.join(joints_norm_per_frame))
         # f.write('\n')
+        nb += 1
 
 video_writer.release()
 cap.release()
