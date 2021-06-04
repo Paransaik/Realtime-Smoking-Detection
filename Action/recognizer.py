@@ -101,7 +101,7 @@ def load_action_premodel(model):
 
 def framewise_recognize(pose, pretrained_model):
     frame, joints, bboxes, xcenter = pose[0], pose[1], pose[2], pose[3]
-    joints_norm_per_frame = np.array(pose[-2])
+    joints_norm_per_frame = np.array(pose[-3])
 
     if bboxes:
         bboxes = np.array(bboxes)

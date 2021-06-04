@@ -37,12 +37,15 @@ class TfPoseVisualizer:
         # for record and get dataset
         record_joints_norm = []
 
-        x = []
-        y = []
+        xh = []
+        yh = []
 
+        xw = []
+        yw = []
         for human in humans:
             xs, ys, centers = [], [], {}
-            r = []
+            rh = []
+            rw = []
             # x, y 좌표를 얻기 위한 list
             xline = [0 for i in range(18)]
             yline = [0 for i in range(18)]
@@ -76,29 +79,57 @@ class TfPoseVisualizer:
                 xline[i] = center_x
                 yline[i] = center_y
 
-            x.append(xline)
-            y.append(yline)
+            xh.append(xline)
+            yh.append(yline)
 
-            for i in range(len(x)):
+            xw.append(xline)
+            yw.append(yline)
+
+            # 목과 손목 사이의 거리 비교, 높이를 사용
+            for i in range(len(xh)):
                 # 4 오른손목
-                if (x[i][0] == 0) or (x[i][4] == 0):
-                    r.append(99999)
+                if (xh[i][0] == 0) or (xh[i][4] == 0):
+                    rh.append(99999)
                     break
                 else:
-                    rresu = (((x[i][4] - x[i][0]) ** 2) + ((y[i][4] - y[i][0]) ** 2)) ** 0.5
+                    rresu = (((xh[i][4] - xh[i][0]) ** 2) + ((yh[i][4] - yh[i][0]) ** 2)) ** 0.5
 
                 # 7 왼쪽손목
-                if (x[i][5] == 0) or (x[i][7] == 0):
-                    r.append(99999)
+                if (xh[i][5] == 0) or (xh[i][7] == 0):
+                    rh.append(99999)
                     break
                 else:
-                    lresu = (((x[i][7] - x[i][0]) ** 2) + ((y[i][7] - y[i][0]) ** 2)) ** 0.5
+                    lresu = (((xh[i][7] - xh[i][0]) ** 2) + ((yh[i][7] - yh[i][0]) ** 2)) ** 0.5
 
-                if rresu > lresu:
-                    r.append(lresu)
+                if rresu == 99999 and lresu == 99999:
+                    rh.append(0)
+                elif rresu > lresu:
+                    rh.append(lresu)
                 else:
-                    r.append(rresu)
+                    rh.append(rresu)
 
+            # 어깨와 손목 사이의 거리 비교, 너비 사용
+            for i in range(len(xw)):
+                # 4 오른손목
+                if (xw[i][4] == 0) or (xw[i][2] == 0):
+                    rw.append(99999)
+                    break
+                else:
+                    rresu = (((xw[i][4] - xw[i][2]) ** 2) + ((yw[i][4] - yw[i][2]) ** 2)) ** 0.5
+
+                # 7 왼쪽손목
+                if (xw[i][5] == 0) or (xw[i][7] == 0):
+                    rw.append(99999)
+                    break
+                else:
+                    lresu = (((xw[i][7] - xw[i][5]) ** 2) + ((yw[i][7] - yw[i][5]) ** 2)) ** 0.5
+
+                if rresu == 99999 and lresu == 99999:
+                    rw.append(0)
+                elif rresu > lresu:
+                    rw.append(lresu)
+                else:
+                    rw.append(rresu)
             ##########################
 
 
@@ -124,7 +155,7 @@ class TfPoseVisualizer:
                 xcenter.append(centers[1][0])
         # print(r)
 
-        return npimg, joints, bboxes, xcenter, record_joints_norm, r
+        return npimg, joints, bboxes, xcenter, record_joints_norm, rh, rw
 
     @staticmethod
     def draw_pose_only(npimg, humans):
