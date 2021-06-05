@@ -12,7 +12,7 @@ parser = argparse.ArgumentParser(description='Action Recognition by OpenPose')
 parser.add_argument('--video', help='Path to video file.',
     default=os.path.basename("/C:/Users/haram/PycharmProjects/"
                              "Online-Realtime-Action-Recognition-based-on-OpenPose-master/"
-                             "tabaco2.mp4"))
+                             "tabaco1.mp4"))
 args = parser.parse_args()
 
 # 导入相关模型
@@ -48,18 +48,19 @@ while cv.waitKey(1) < 0:
         pose = TfPoseVisualizer.draw_pose_rgb(show, humans)  # return frame, joints, bboxes, xcenter, record_joints_norm, center
         # 객체 수 많큼 반복
         # pose[2][i] = [tl_x, tl_y, width, height]
-        for i in range(len(pose[2])):
-            print(i, "[5][i] = ", pose[5][i]) # 코와 손목 사이의 거리
-            print(i, "[2][i][3] * 0.35 = ", pose[2][i][3] * 0.35) # 높이의 35% 값
+        for i in range(len(pose[5])):
+            print(i, "h[5][i] = ", pose[5][i]) # 코과 손목 사이의 거리 비교, 높이를 사용
+            print(i, "h[2][i][3] * 0.35 = ", pose[2][i][3] * 0.35) # 높이의 35% 값
 
-            print(i, "[6][i] = ", pose[6][i])  # 어깨와 손목 사이의 거리
-            print(i, "[2][i][2] * 0.30 = ", pose[2][i][2] * 0.30)  # 너비의 30% 값
+            print(i, "w[6][i] = ", pose[6][i])  # 각각의 손목과 어깨 사이의 거리 비교, 너비 사용
+            print(i, "w[2][i][2] * 0.30 = ", pose[2][i][2] * 0.30)  # 너비의 30% 값
+
+            if ((pose[2][i][3] * 0.35) > (pose[5][i])) or ((pose[2][i][2] * 0.30) > (pose[6][i])):
+                print(1)
+            else:
+                print(0)
+
             print()
-
-            # if (pose[2][i][2] * 0.30) > (pose[6][i]):
-            #     print(1)
-            # else:
-            #     print(0)
 
         # recognize the action framewise
         show = framewise_recognize(pose, action_classifier)

@@ -85,30 +85,28 @@ class TfPoseVisualizer:
             xw.append(xline)
             yw.append(yline)
 
-            # 목과 손목 사이의 거리 비교, 높이를 사용
+            # 코과 손목 사이의 거리 비교, 높이를 사용
             for i in range(len(xh)):
                 # 4 오른손목
-                if (xh[i][0] == 0) or (xh[i][4] == 0):
+                if (yh[i][0] == 0) or (yh[i][4] == 0):
                     rh.append(99999)
                     break
                 else:
-                    rresu = (((xh[i][4] - xh[i][0]) ** 2) + ((yh[i][4] - yh[i][0]) ** 2)) ** 0.5
+                    rresu = ((yh[i][0] - yh[i][4]) ** 2) ** 0.5
 
                 # 7 왼쪽손목
-                if (xh[i][5] == 0) or (xh[i][7] == 0):
+                if (yh[i][0] == 0) or (yh[i][7] == 0):
                     rh.append(99999)
                     break
                 else:
-                    lresu = (((xh[i][7] - xh[i][0]) ** 2) + ((yh[i][7] - yh[i][0]) ** 2)) ** 0.5
+                    lresu = ((yh[i][0] - yh[i][7]) ** 2) ** 0.5
 
-                if rresu == 99999 and lresu == 99999:
-                    rh.append(0)
-                elif rresu > lresu:
+                if rresu > lresu:
                     rh.append(lresu)
                 else:
                     rh.append(rresu)
 
-            # 어깨와 손목 사이의 거리 비교, 너비 사용
+            # 각각의 손목과 어깨 사이의 거리 비교, 너비 사용
             for i in range(len(xw)):
                 # 4 오른손목
                 if (xw[i][4] == 0) or (xw[i][2] == 0):
@@ -124,9 +122,7 @@ class TfPoseVisualizer:
                 else:
                     lresu = (((xw[i][7] - xw[i][5]) ** 2) + ((yw[i][7] - yw[i][5]) ** 2)) ** 0.5
 
-                if rresu == 99999 and lresu == 99999:
-                    rw.append(0)
-                elif rresu > lresu:
+                if rresu > lresu:
                     rw.append(lresu)
                 else:
                     rw.append(rresu)
