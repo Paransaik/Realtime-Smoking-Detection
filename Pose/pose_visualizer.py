@@ -33,7 +33,8 @@ class TfPoseVisualizer:
             npimg = np.copy(npimg)
         image_h, image_w = npimg.shape[:2]
         joints, bboxes, xcenter = [], [], []
-
+        rh = []
+        rw = []
         # for record and get dataset
         record_joints_norm = []
 
@@ -44,8 +45,9 @@ class TfPoseVisualizer:
         yw = []
         for human in humans:
             xs, ys, centers = [], [], {}
-            rh = []
-            rw = []
+            rh.clear()
+            rw.clear()
+
             # x, y 좌표를 얻기 위한 list
             xline = [0 for i in range(18)]
             yline = [0 for i in range(18)]

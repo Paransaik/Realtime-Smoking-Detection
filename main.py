@@ -62,32 +62,32 @@ while cv.waitKey(1) < 0:
 
             print()
 
-        # recognize the action framewise
-        show = framewise_recognize(pose, action_classifier)
-
-        height, width = show.shape[:2]
-        # 显示实时FPS值
-        if (time.time() - start_time) > fps_interval:
-            # 计算这个interval过程中的帧数，若interval为1秒，则为FPS
-            realtime_fps = fps_count / (time.time() - start_time)
-            fps_count = 0  # 帧数清零
-            start_time = time.time()
-        fps_label = 'FPS:{0:.2f}'.format(realtime_fps)
-        cv.putText(show, fps_label, (width-160, 25), cv.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 3)
-
-        # 显示检测到的人数
-        num_label = "Human: {0}".format(len(humans))
-        cv.putText(show, num_label, (5, height-45), cv.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 3)
-
-        # 显示目前的运行时长及总帧数
-        if frame_count == 1:
-            run_timer = time.time()
-        run_time = time.time() - run_timer
-        time_frame_label = '[Time:{0:.2f} | Frame:{1}]'.format(run_time, frame_count)
-        cv.putText(show, time_frame_label, (5, height-15), cv.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 3)
-
-        cv.imshow('Action Recognition based on OpenPose', show)
-        video_writer.write(show)
+        # # recognize the action framewise
+        # show = framewise_recognize(pose, action_classifier)
+        #
+        # height, width = show.shape[:2]
+        # # 显示实时FPS值
+        # if (time.time() - start_time) > fps_interval:
+        #     # 计算这个interval过程中的帧数，若interval为1秒，则为FPS
+        #     realtime_fps = fps_count / (time.time() - start_time)
+        #     fps_count = 0  # 帧数清零
+        #     start_time = time.time()
+        # fps_label = 'FPS:{0:.2f}'.format(realtime_fps)
+        # cv.putText(show, fps_label, (width-160, 25), cv.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 3)
+        #
+        # # 显示检测到的人数
+        # num_label = "Human: {0}".format(len(humans))
+        # cv.putText(show, num_label, (5, height-45), cv.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 3)
+        #
+        # # 显示目前的运行时长及总帧数
+        # if frame_count == 1:
+        #     run_timer = time.time()
+        # run_time = time.time() - run_timer
+        # time_frame_label = '[Time:{0:.2f} | Frame:{1}]'.format(run_time, frame_count)
+        # cv.putText(show, time_frame_label, (5, height-15), cv.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 3)
+        #
+        # cv.imshow('Action Recognition based on OpenPose', show)
+        # video_writer.write(show)
 
         # # 采集数据，用于训练过程(for training)
         # joints_norm_per_frame = np.array(pose[-1]).astype(np.str)

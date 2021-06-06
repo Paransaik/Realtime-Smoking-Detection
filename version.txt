@@ -1,0 +1,29 @@
+absl-py @ file:///C:/ci/absl-py_1615411329183/work
+astor==0.8.1
+certifi==2020.12.5
+coverage @ file:///C:/ci/coverage_1614614921360/work
+Cython @ file:///C:/ci/cython_1618435343278/work
+gast @ file:///tmp/build/80754af9/gast_1597433534803/work
+grpcio @ file:///C:/ci/grpcio_1614884461394/work
+h5py==2.10.0
+importlib-metadata @ file:///C:/ci/importlib-metadata_1617877476772/work
+Keras==2.2.4
+Keras-Applications @ file:///tmp/build/80754af9/keras-applications_1594366238411/work
+Keras-Preprocessing @ file:///tmp/build/80754af9/keras-preprocessing_1612283640596/work
+Markdown @ file:///C:/ci/markdown_1614364003005/work
+numpy==1.14.2
+protobuf==3.14.0
+pyreadline==2.1
+PyYAML==5.4.1
+scikit-learn==0.19.0
+scipy==1.1.0
+six @ file:///C:/ci/six_1605187303045/work
+tensorboard==1.14.0
+tensorflow==1.14.0
+tensorflow-estimator==1.14.0
+termcolor==1.1.0
+typing-extensions @ file:///home/ktietz/src/ci_mi/typing_extensions_1612808209620/work
+Werkzeug @ file:///home/ktietz/src/ci/werkzeug_1611932622770/work
+wincertstore==0.2
+wrapt==1.12.1
+zipp @ file:///tmp/build/80754af9/zipp_1615904174917/work
