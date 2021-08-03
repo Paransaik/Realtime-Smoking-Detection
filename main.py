@@ -34,7 +34,7 @@ video_writer = set_video_writer(cap, write_fps=int(7.0))
 
 # # 保存关节数据的txt文件，用于训练过程(for training)
 # f = open('origin_data.txt', 'a+')
-
+#
 while cv.waitKey(1) < 0:
     has_frame, show = cap.read()
     if has_frame:
