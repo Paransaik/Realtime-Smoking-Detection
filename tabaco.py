@@ -36,9 +36,30 @@ import matplotlib.pyplot as plt
 # 예를 들어 실행 또는 Shift+Enter를 누르면 입력 디렉토리 아래에 모든 파일이 나열됩니다.
 
 import tensorflow as tf
-gpus = tf.config.experimental.list_physical_devices('GPU')
-tf.config.experimental.set_virtual_device_configuration(gpus[0],
-    [tf.config.experimental.VirtualDeviceConfiguration(memory_limit=1024)])
+
+# hello = tf.constant('hello, Tensorflow!')
+# sess = tf.Session()
+# print(sess.run(hello))
+
+from tensorflow.python.client import device_lib
+
+# import tensorflow as tf
+# device_name = tf.test.gpu_device_name()
+# if device_name != '/device:GPU:0':
+#     raise SystemError('GPU device not found')
+# print('Found GPU at: {}'.format(device_name))
+
+
+# def get_available_devices():
+#     local_device_protos = device_lib.list_local_devices()
+#     return [x.name for x in local_device_protos]
+#
+# print(get_available_devices())
+
+# import tensorflow as tf
+# gpus = tf.config.experimental.list_physical_devices('GPU')
+# tf.config.experimental.set_virtual_device_configuration(gpus[0],
+#     [tf.config.experimental.VirtualDeviceConfiguration(memory_limit=1024)])
 
 def run():
     dataset_path = './1024data'
