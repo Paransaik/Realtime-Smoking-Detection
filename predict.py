@@ -30,37 +30,29 @@ from imutils import paths
 import numpy as np  # linear algebra
 import pandas as pd  # data processing, CSV file I/O (e.g. pd.read_csv)
 import matplotlib.pyplot as plt
-
+from keras.models import load_model
 
 # 입력 데이터 파일은 읽기 전용 ".../input/" 디렉토리에서 사용할 수 있습니다.
 # 예를 들어 실행 또는 Shift+Enter를 누르면 입력 디렉토리 아래에 모든 파일이 나열됩니다.
+'''
+smoking	1996
+nonsmok	1279
+len(trainX) 2603
+len(testX)	651
+===========
+3254
+len(imagePaths) 3254
+'''
+'''
+              precision    recall  f1-score   support
 
-import tensorflow as tf
+ not_smoking       0.79      0.82      0.81       255
+     smoking       0.88      0.86      0.87       396
 
-# hello = tf.constant('hello, Tensorflow!')
-# sess = tf.Session()
-# print(sess.run(hello))
-
-from tensorflow.python.client import device_lib
-
-# import tensorflow as tf
-# device_name = tf.test.gpu_device_name()
-# if device_name != '/device:GPU:0':
-#     raise SystemError('GPU device not found')
-# print('Found GPU at: {}'.format(device_name))
-
-
-# def get_available_devices():
-#     local_device_protos = device_lib.list_local_devices()
-#     return [x.name for x in local_device_protos]
-#
-# print(get_available_devices())
-
-# import tensorflow as tf
-# gpus = tf.config.experimental.list_physical_devices('GPU')
-# tf.config.experimental.set_virtual_device_configuration(gpus[0],
-#     [tf.config.experimental.VirtualDeviceConfiguration(memory_limit=1024)])
-
+    accuracy                           0.85       651
+   macro avg       0.84      0.84      0.84       651
+weighted avg       0.85      0.85      0.85       651
+'''
 def run():
     dataset_path = './1024data'
     model_store_dir = 'smoking_detector2.model'
@@ -68,6 +60,7 @@ def run():
     INIT_LR = 1e-4
     EPOCHS = 100
     BS = 32
+
     imagePaths = list(paths.list_images(dataset_path))
 
     data = []
@@ -83,62 +76,20 @@ def run():
         labels.append(label)
 
     data = np.array(data, dtype="float32")
+    print(data.shape) # (3254, 224, 224, 3)
 
-    labels = np.array(labels)
-    # labels = non_smoking or smoking
+    model = load_model('./case3/smoking_detector2.model')  #, custom_objects={"InstanceNormalization": InstanceNormalization}
 
-    lb = LabelBinarizer()
-    labels = lb.fit_transform(labels)
-    labels = to_categorical(labels)
-    # labels2= [1. 0.] or [0. 1.]
+    predIdxs = model.predict(data, batch_size=BS)
+    predIdxs = np.argmax(predIdxs, axis=1)
 
-    (trainX, testX, trainY, testY) = train_test_split(data, labels, test_size=0.20, stratify=labels, random_state=42)
-    # print('trinaX', trainX.shape)     # (2603, 224, 224, 3)
-    # print(len(trainX))                # 2603
-    # print('textX', testX.shape)       # textX (651, 224, 224, 3)
-    # print(len(testX))                 # 651
+    #model.summary()
 
-    aug = ImageDataGenerator(
-        rotation_range=20,
-        zoom_range=0.15,
-        width_shift_range=0.2,
-        height_shift_range=0.2,
-        shear_range=0.15,
-        horizontal_flip=True,
-        fill_mode="nearest")
-
-    baseModel = MobileNetV2(weights="imagenet", include_top=False,input_tensor=Input(shape=(224, 224, 3)))
-
-    headModel = baseModel.output
-    headModel = AveragePooling2D(pool_size=(7, 7))(headModel)
-    headModel = Flatten(name="flatten")(headModel)
-    headModel = Dense(128, activation="relu")(headModel)
-    headModel = Dropout(0.5)(headModel)
-    headModel = Dense(2, activation="softmax")(headModel)
-    model = Model(inputs=baseModel.input, outputs=headModel)
-
-    for layer in baseModel.layers:
-        layer.trainable = False
-    opt = Adam(lr=INIT_LR, decay=INIT_LR / EPOCHS)
-    model.compile(loss="binary_crossentropy", optimizer=opt,metrics=["accuracy"])
-
-    print('textX', testX.shape)       # textX (651, 224, 224, 3)
-    print(len(testX))                 # 651
-
-    # H = model.fit(aug.flow(trainX, trainY, batch_size=BS),
-    #               steps_per_epoch=len(trainX) // BS,
-    #               validation_data=(testX, testY),
-    #               validation_steps=len(testX) // BS,
-    #               epochs=EPOCHS)
-
-
-    # predIdxs = model.predict(testX, batch_size=BS)
-    # predIdxs = np.argmax(predIdxs, axis=1)
-
+    for i in range(len(data)):
+        if i % 100 == 0:
+            print("labels: " + str(labels[i]) + " predict: " + str(predIdxs[i]))
     # print(classification_report(testY.argmax(axis=1), predIdxs,target_names=lb.classes_))
     #
-    # # 모델 저장
-    # model.save(model_store_dir, save_format="h5")
     # N = EPOCHS
     #
     # plt.style.use("ggplot")
