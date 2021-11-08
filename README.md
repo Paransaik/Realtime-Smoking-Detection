@@ -19,8 +19,17 @@ A skeleton-based real-time online action recognition project, classifying and re
  - tensorflow & keras
  - numpy & scipy 
  - pathlib
- 
- 
+
+
+------
+## Add 
+ - python=3.8
+ - tensorflow == 2.5.0
+ - keras==2.4.3
+ - py-opencv==4.0.1
+ - scikit-learn==0.24.2
+
+
 ------
 ## Usage
  - Download the openpose VGG tf-model with command line `./download.sh`(/Pose/graph_models/VGG_origin) or fork [here](https://pan.baidu.com/s/1XT8pHtNP1FQs3BPHgD5f-A#list/path=%2Fsharelink1864347102-902260820936546%2Fopenpose%2Fopenpose%20graph%20model%20coco&parentPath=%2Fsharelink1864347102-902260820936546), and place it under the corresponding folder; 
@@ -47,7 +56,7 @@ A skeleton-based real-time online action recognition project, classifying and re
 
 
  
-  - ***multi people***
+ - ***multi people***
 
  
 

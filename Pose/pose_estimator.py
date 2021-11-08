@@ -1,3 +1,5 @@
+# https://east-rain.github.io/docs/Deep%20Learning/Openpose/openpose.html
+
 import numpy as np #numpy 모듈 별명 np로 설정
 import math # 수학관련 함수 상수 모듈
 import itertools # 자신만의 반복자?를 만드는 모듈

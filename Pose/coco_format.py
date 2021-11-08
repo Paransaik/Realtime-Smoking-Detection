@@ -1,5 +1,6 @@
 from enum import Enum
 
+# https://east-rain.github.io/docs/Deep%20Learning/Openpose/openpose.html
 
 class CocoPart(Enum):
     Nose = 0 #코

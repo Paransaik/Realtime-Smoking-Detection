@@ -38,10 +38,13 @@ def choose_run_mode(args):
 def load_pretrain_model(model):
     dyn_graph_path = {
         'VGG_origin': str(file_path / "Pose/graph_models/VGG_origin/graph_opt.pb"),
-        'mobilenet_thin': str(file_path / "Pose/graph_models/mobilenet_thin/graph_opt.pb"),
-        'mobilenet_v2_large': str(file_path / "Pose/graph_models/mobilenet_v2_large/graph_opt.pb")
+
     }
+
+    print(dyn_graph_path.get('VGG_origin'))
+
     graph_path = dyn_graph_path[model]
+
     if not os.path.isfile(graph_path):
         raise Exception('Graph file doesn\'t exist, path=%s' % graph_path)
 
