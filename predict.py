@@ -76,18 +76,21 @@ def run():
         labels.append(label)
 
     data = np.array(data, dtype="float32")
-    print(data.shape) # (3254, 224, 224, 3)
+    print(data.shape)  # (3254, 224, 224, 3)
+    print(type(data))
 
     model = load_model('./case3/smoking_detector2.model')  #, custom_objects={"InstanceNormalization": InstanceNormalization}
 
     predIdxs = model.predict(data, batch_size=BS)
-    predIdxs = np.argmax(predIdxs, axis=1)
+    predIdxs = np.argmax(predIdxs, axis=1)  # 행으로 > 3254, 224, 3
 
-    #model.summary()
+    # model.summary()
 
     for i in range(len(data)):
         if i % 100 == 0:
             print("labels: " + str(labels[i]) + " predict: " + str(predIdxs[i]))
+
+
     # print(classification_report(testY.argmax(axis=1), predIdxs,target_names=lb.classes_))
     #
     # N = EPOCHS

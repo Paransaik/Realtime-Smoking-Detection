@@ -125,33 +125,32 @@ def run():
     print('textX', testX.shape)       # textX (651, 224, 224, 3)
     print(len(testX))                 # 651
 
-    # H = model.fit(aug.flow(trainX, trainY, batch_size=BS),
-    #               steps_per_epoch=len(trainX) // BS,
-    #               validation_data=(testX, testY),
-    #               validation_steps=len(testX) // BS,
-    #               epochs=EPOCHS)
+    H = model.fit(aug.flow(trainX, trainY, batch_size=BS),
+                  steps_per_epoch=len(trainX) // BS,
+                  validation_data=(testX, testY),
+                  validation_steps=len(testX) // BS,
+                  epochs=EPOCHS)
 
+    predIdxs = model.predict(testX, batch_size=BS)
+    predIdxs = np.argmax(predIdxs, axis=1)
 
-    # predIdxs = model.predict(testX, batch_size=BS)
-    # predIdxs = np.argmax(predIdxs, axis=1)
+    print(classification_report(testY.argmax(axis=1), predIdxs,target_names=lb.classes_))
 
-    # print(classification_report(testY.argmax(axis=1), predIdxs,target_names=lb.classes_))
-    #
-    # # 모델 저장
-    # model.save(model_store_dir, save_format="h5")
-    # N = EPOCHS
-    #
-    # plt.style.use("ggplot")
-    # plt.figure()
-    # plt.plot(np.arange(0, N), H.history["loss"], label="train_loss")
-    # plt.plot(np.arange(0, N), H.history["val_loss"], label="val_loss")
-    # plt.plot(np.arange(0, N), H.history["accuracy"], label="train_acc")
-    # plt.plot(np.arange(0, N), H.history["val_accuracy"], label="val_acc")
-    # plt.title("Training Loss and Accuracy")
-    # plt.xlabel("Epoch #")
-    # plt.ylabel("Loss/Accuracy")
-    # plt.legend(loc="lower left")
-    # plt.savefig('ploy.jpg')
+    # 모델 저장
+    model.save(model_store_dir, save_format="h5")
+    N = EPOCHS
+
+    plt.style.use("ggplot")
+    plt.figure()
+    plt.plot(np.arange(0, N), H.history["loss"], label="train_loss")
+    plt.plot(np.arange(0, N), H.history["val_loss"], label="val_loss")
+    plt.plot(np.arange(0, N), H.history["accuracy"], label="train_acc")
+    plt.plot(np.arange(0, N), H.history["val_accuracy"], label="val_acc")
+    plt.title("Training Loss and Accuracy")
+    plt.xlabel("Epoch #")
+    plt.ylabel("Loss/Accuracy")
+    plt.legend(loc="lower left")
+    plt.savefig('ploy.jpg')
 
 if __name__ == '__main__':
     run()
