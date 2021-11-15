@@ -7,16 +7,30 @@ import os
 # 모듈 추가
 from utils import choose_run_mode, load_pretrain_model, set_video_writer #utils.py파일에 3개 함수 가져오기
 from Pose.pose_visualizer import TfPoseVisualizer #pose파일 밑에 pose에있는 pose_visualizer 중에서 TfPoseVisualizer클래스 가져옴
-# from Action.recognizer import load_action_premodel , framewise_recognize #action 파일 밑에 recognizer.py 안에 함수 2개 가져옴
+from Action.recognizer import load_action_premodel , framewise_recognize #action 파일 밑에 recognizer.py 안에 함수 2개 가져옴
 from keras.models import load_model
 
 #ArgumentParser에 원하는 description을 입력하여 parser객체 생성
 parser = argparse.ArgumentParser(description='Action Recognition by OpenPose')#openpose에 의한 작업 인식?
+
 #add_argument method를 통해 원하는 만큼 인자 종류 추가
 # parser.add_argument('--video', help='Path to video file.')#비디오 파일 경로
+'''
+test, input dataset
+
 parser.add_argument('--video', help='Path to video file.',
-    default=os.path.basename("C:/Users/haram/PycharmProjects/OpenBankProject/"
-                             "tabaco1.mp4"))
+                    default=os.path.basename("C:/Users/haram/PycharmProjects/OpenBankProject/"
+                                             "tabaco1.mp4"))
+
+parser.add_argument('--video', help='Path to video file.',
+                    default=os.path.basename("C:/Users/haram/PycharmProjects/OpenBankProject/"
+                                             "tt.jpg"))
+# 326*939
+'''
+parser.add_argument('--video', help='Path to video file.',
+                    default=os.path.basename("C:/Users/haram/PycharmProjects/OpenBankProject/"
+                                             "aasd.jpg"))
+# 1280*1920
 
 #parse_args() method로 명령창에서 주어진 인자를 파싱한다.
 args = parser.parse_args()#args 이름으로 파싱 성공시 args.parameter 형태로 주어진 인자 값을 받아서 사용가능
@@ -26,7 +40,7 @@ args = parser.parse_args()#args 이름으로 파싱 성공시 args.parameter 형
 estimator = load_pretrain_model('VGG_origin')# 훈련 모델 로드(VGG_origin) 분류??
 # print('estimator', estimator.graph_path)
 # action파일 밑에 있는 Action/framewise_recognition.h5 모델 불러오기
-# action_classifier = load_action_premodel('Action/framewise_recognition.h5')
+action_classifier = load_action_premodel('Action/framewise_recognition.h5')
 
 # 인자 초기화
 realtime_fps = '0.0000'
@@ -43,7 +57,7 @@ video_writer = set_video_writer(cap, write_fps=int(7.0)) #비디오 fps설정
 # #관절을 저장하는 txt파일 (t)for training)
 #f = open('origin_data.txt', 'a+')
 
-model = load_model('./Model/smoking_detector2.model')  #, custom_objects={"InstanceNormalization": InstanceNormalization}
+# model = load_model('./Model/smoking_detector2.model')  #, custom_objects={"InstanceNormalization": InstanceNormalization}
 
 while cv.waitKey(1) < 0: #키가 입력될때까지 반복
     has_frame, show = cap.read()  # has_frame 과 show에 비디오를 한프레임씩 읽음 성공시 True, 실패시 False
@@ -51,8 +65,8 @@ while cv.waitKey(1) < 0: #키가 입력될때까지 반복
     11.8.(月)
     
     '''
-    print('show shape', show.shape)  # show shape (540, 960, 3) --> 1장
-    print('show type', type(show))  # show type <class 'numpy.ndarray'>
+    #print('show shape', show.shape)  # show shape (540, 960, 3) --> 1장
+    #print('show type', type(show))  # show type <class 'numpy.ndarray'>
 
     if has_frame:
         fps_count += 1  # fps 카운트
@@ -80,7 +94,7 @@ while cv.waitKey(1) < 0: #키가 입력될때까지 반복
         #         print(0)
 
         # recognize the action framewise
-        #show = framewise_recognize(pose, action_classifier)
+        # show = framewise_recognize(pose, action_classifier)
 
         height, width = show.shape[:2] # 한 프레임씩 읽은 비디오의 높이, 넓이 크기
 
