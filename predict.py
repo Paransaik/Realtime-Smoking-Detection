@@ -54,11 +54,9 @@ len(imagePaths) 3254
 weighted avg       0.85      0.85      0.85       651
 '''
 def run():
-    dataset_path = './1024data'
-    model_store_dir = 'smoking_detector2.model'
+    dataset_path = './1024data/after'
+    model_store_dir = 'smoking_add_skeleton.model'
 
-    INIT_LR = 1e-4
-    EPOCHS = 100
     BS = 32
 
     imagePaths = list(paths.list_images(dataset_path))

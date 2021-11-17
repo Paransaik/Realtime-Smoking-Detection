@@ -62,14 +62,14 @@ from tensorflow.python.client import device_lib
 #     [tf.config.experimental.VirtualDeviceConfiguration(memory_limit=1024)])
 
 def run():
-    dataset_path = './1024data'
-    model_store_dir = 'smoking_detector2.model'
+    dataset_path = './1024data/'
+    model_store_dir = 'smoking_add_skeleton.model'
 
     INIT_LR = 1e-4
     EPOCHS = 100
     BS = 32
     imagePaths = list(paths.list_images(dataset_path))
-
+    print(imagePaths)
     data = []
     labels = []
 
