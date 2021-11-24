@@ -60,7 +60,7 @@ for i, imagePath in enumerate(imagePaths):
 # model 1
 # smoke = load_model('./smoke/smoking_detector2.model')
 # model 2
-smoke = load_model('./smoke/smoking_add_skeleton_dataset_delete.model')
+smoke = load_model('Model/smoking_add_skeleton_dataset_delete.model')
 
 # ArgumentParser에 원하는 description을 입력하여 parser객체 생성
 parser = argparse.ArgumentParser(description='Action Recognition by OpenPose')  # openpose에 의한 작업 인식?
@@ -90,9 +90,6 @@ frame_count = 0
 # 동영상 파일 읽고 쓰기(웹캠 입력만 테스트)
 cap = choose_run_mode(args)  # cap 객체에 choose_run_mode 파싱
 # video_writer = set_video_writer(cap, write_fps=int(7.0))  # 비디오 fps설정
-
-# #관절을 저장하는 txt파일 (t)for training)
-# f = open('origin_data.txt', 'a+')
 
 # model = load_model('./Model/smoking_detector2.model')  #, custom_objects={"InstanceNormalization": InstanceNormalization}
 
