@@ -59,7 +59,7 @@ for i, imagePath in enumerate(imagePaths):
 '''
 # model 1
 # smoke = load_model('./smoke/smoking_detector2.model')
-# model 2
+# model 4
 smoke = load_model('Model/smoking_add_skeleton_dataset_delete.model')
 
 # ArgumentParser에 원하는 description을 입력하여 parser객체 생성
