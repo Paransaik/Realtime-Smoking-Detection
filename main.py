@@ -1,13 +1,13 @@
 # -*- coding: UTF-8 -*-
-import cv2 as cv #cv2 영상처리 cv라이브러리
-import argparse #2.7버전 optparse 대체 하기위해 추가됨 api 수정이 필요한 기능 지원 인자 구분?
-import numpy as np #numpy 별명 np사용 다차원 배열 사용을 위해
-import time # time() 함수, strftime() 함수 , lovaltime() 함수 사용 시간관련 함수
+import cv2 as cv  # cv2 영상처리 cv라이브러리
+import argparse  # 2.7버전 optparse 대체 하기위해 추가됨 api 수정이 필요한 기능 지원 인자 구분?
+import numpy as np  # numpy 별명 np사용 다차원 배열 사용을 위해
+import time  # time() 함수, strftime() 함수 , lovaltime() 함수 사용 시간관련 함수
 import os
 # 모듈 추가
 from utils import choose_run_mode, load_pretrain_model, set_video_writer #utils.py파일에 3개 함수 가져오기
 from Pose.pose_visualizer import TfPoseVisualizer #pose파일 밑에 pose에있는 pose_visualizer 중에서 TfPoseVisualizer클래스 가져옴
-from Action.recognizer import load_action_premodel , framewise_recognize #action 파일 밑에 recognizer.py 안에 함수 2개 가져옴
+# from Action.recognizer import load_action_premodel , framewise_recognize #action 파일 밑에 recognizer.py 안에 함수 2개 가져옴
 from keras.models import load_model
 from imutils import paths
 
@@ -77,7 +77,7 @@ args = parser.parse_args()  # args 이름으로 파싱 성공시 args.parameter 
 estimator = load_pretrain_model('VGG_origin')  # 훈련 모델 로드(VGG_origin) 분류??
 # print('estimator', estimator.graph_path)
 # action파일 밑에 있는 Action/framewise_recognition.h5 모델 불러오기
-action_classifier = load_action_premodel('Action/framewise_recognition.h5')
+# action_classifier = load_action_premodel('Action/framewise_recognition.h5')
 
 # 인자 초기화
 realtime_fps = '0.0000'
