@@ -11,7 +11,7 @@ from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
 from tensorflow.keras.preprocessing.image import img_to_array
 from keras.models import load_model
 
-HOST = '192.168.0.4'
+HOST = '36.38.61.187'
 PORT = 8888
 
 # model 4
@@ -56,7 +56,7 @@ while cv.waitKey(1) < 0: #키가 입력될때까지 반복
 
         image = img_to_array(show)  # image (450, 300, 3)
         image = cv.resize(image, dsize=(224, 224),
-                          interpolation=cv.INTER_LANCZOS4)  # lanczos 보간법  [[0.9569238  0.04307625]] [[0.9936041  0.00639589]]
+                          interpolation=cv.INTER_NEAREST)  # 이웃 보간법 사용
         # > 이웃 보간법으로 수정
 
         image = preprocess_input(image)
@@ -65,6 +65,9 @@ while cv.waitKey(1) < 0: #키가 입력될때까지 반복
 
         predIdxs = smoke.predict(data)
         predIdxs = np.argmax(predIdxs, axis=1)
+
+        for i in range(30):
+            print()
 
         for i in range(len(humans)):
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -78,6 +81,7 @@ while cv.waitKey(1) < 0: #키가 입력될때까지 반복
                 data = s.recv(1024)
                 print('인공지능이 ' + str(i) + '번째 객체가 흡연 중인 것을 탐지했습니다. \n관리자에게 \'' + data.decode() + '\'를 전송합니다.')
                 s.close()
+
             # elif predIdxs == 0:
             #     msg = "0"  # exec(open("test4.py 0"))
             #     s.send(msg.encode(encoding='utf_8', errors='strict'))
@@ -108,5 +112,7 @@ while cv.waitKey(1) < 0: #키가 입력될때까지 반복
         cv.putText(show, time_frame_label, (5, height-15), cv.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 3)
 
         cv.imshow('Action Recognition based on OpenPose', show)  # 창 이름
+
+
 
 cap.release()  # cap 비디오 객체 해제

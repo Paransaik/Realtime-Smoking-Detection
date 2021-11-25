@@ -39,8 +39,6 @@ class TfPoseVisualizer:
 
         for human in humans:
             xs, ys, centers = [], [], {}
-            rh.clear()
-            rw.clear()
 
             # 모든 관절을 그림에 그립니다
             for i in range(CocoPart.Background.value):
