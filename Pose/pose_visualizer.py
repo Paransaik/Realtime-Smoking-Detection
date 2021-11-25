@@ -29,9 +29,6 @@ class TfPoseVisualizer:
 
     @staticmethod
     def draw_pose_rgb(npimg, humans, imgcopy=False):
-        rh = []
-        rw = []
-
         if imgcopy:
             npimg = np.copy(npimg)
         image_h, image_w = npimg.shape[:2]
@@ -40,19 +37,10 @@ class TfPoseVisualizer:
         # for record and get dataset
         record_joints_norm = []
 
-        xh = []
-        yh = []
-
-        xw = []
-        yw = []
         for human in humans:
             xs, ys, centers = [], [], {}
             rh.clear()
             rw.clear()
-
-            # x, y 좌표를 얻기 위한 list
-            xline = [0 for i in range(18)]
-            yline = [0 for i in range(18)]
 
             # 모든 관절을 그림에 그립니다
             for i in range(CocoPart.Background.value):
@@ -76,62 +64,7 @@ class TfPoseVisualizer:
                 ys.append(center[1])
 
                 # 관절점 그리기
-                # cv.circle(img,, center, radius, color[, thickness[, lineType[, shift]]])
                 cv.circle(npimg, center, 3, CocoColors[i], thickness=TfPoseVisualizer.Thickness_ratio * 2, lineType=8, shift=0)
-
-            #     ####################################
-            #     xline[i] = center_x
-            #     yline[i] = center_y
-            #
-            # xh.append(xline)
-            # yh.append(yline)
-            #
-            # xw.append(xline)
-            # yw.append(yline)
-            #
-            # # 코과 손목 사이의 거리 비교, 높이를 사용
-            # for i in range(len(xh)):
-            #     # 4 오른손목
-            #     if (yh[i][0] == 0) or (yh[i][4] == 0):
-            #         rh.append(99999)
-            #         break
-            #     else:
-            #         rresu = ((yh[i][0] - yh[i][4]) ** 2) ** 0.5
-            #
-            #     # 7 왼쪽손목
-            #     if (yh[i][0] == 0) or (yh[i][7] == 0):
-            #         rh.append(99999)
-            #         break
-            #     else:
-            #         lresu = ((yh[i][0] - yh[i][7]) ** 2) ** 0.5
-            #
-            #     if rresu > lresu:
-            #         rh.append(lresu)
-            #     else:
-            #         rh.append(rresu)
-            #
-            # # 각각의 손목과 어깨 사이의 거리 비교, 너비 사용
-            # for i in range(len(xw)):
-            #     # 4 오른손목
-            #     if (xw[i][4] == 0) or (xw[i][2] == 0):
-            #         rw.append(99999)
-            #         break
-            #     else:
-            #         rresu = (((xw[i][4] - xw[i][2]) ** 2) + ((yw[i][4] - yw[i][2]) ** 2)) ** 0.5
-            #
-            #     # 7 왼쪽손목
-            #     if (xw[i][5] == 0) or (xw[i][7] == 0):
-            #         rw.append(99999)
-            #         break
-            #     else:
-            #         lresu = (((xw[i][7] - xw[i][5]) ** 2) + ((yw[i][7] - yw[i][5]) ** 2)) ** 0.5
-            #
-            #     if rresu > lresu:
-            #         rw.append(lresu)
-            #     else:
-            #         rw.append(rresu)
-            # ##########################
-
 
             # 같은 사람만의 관절을 부위별로 연결한다
             for pair_order, pair in enumerate(CocoPairsRender):
@@ -153,9 +86,8 @@ class TfPoseVisualizer:
             # coco의 1번 포인트를 xcenter로 기록하기
             if 1 in centers:
                 xcenter.append(centers[1][0])
-        # print(r)
 
-        return npimg, joints, bboxes, xcenter, record_joints_norm, rh, rw
+        return npimg, joints, bboxes, xcenter, record_joints_norm
 
     @staticmethod
     def draw_pose_only(npimg, humans):
