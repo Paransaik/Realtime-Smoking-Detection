@@ -113,6 +113,4 @@ while cv.waitKey(1) < 0: #키가 입력될때까지 반복
 
         cv.imshow('Action Recognition based on OpenPose', show)  # 창 이름
 
-
-
 cap.release()  # cap 비디오 객체 해제
