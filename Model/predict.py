@@ -46,39 +46,23 @@ len(imagePaths) 3254
 '''
 
 
-# model 1
-              precision    recall  f1-score   support
- not_smoking       0.79      0.82      0.81       255
-     smoking       0.88      0.86      0.87       396
+# model 1                                               # model 2
+              precision    recall  f1-score   support                 precision    recall  f1-score   support
+ not_smoking       0.79      0.82      0.81       255    not_smoking       0.82      0.83      0.83       255
+     smoking       0.88      0.86      0.87       396        smoking       0.89      0.89      0.89       396
 
-    accuracy                           0.85       651
-   macro avg       0.84      0.84      0.84       651
-weighted avg       0.85      0.85      0.85       651
+    accuracy                           0.85       651       accuracy                           0.86       651
+   macro avg       0.84      0.84      0.84       651      macro avg       0.86      0.86      0.86       651
+weighted avg       0.85      0.85      0.85       651   weighted avg       0.87      0.86      0.86       651
 
-# model 2
- not_smoking       0.82      0.83      0.83       255
-     smoking       0.89      0.89      0.89       396
+# model 3                                               # model 4
+              precision    recall  f1-score   support                 precision    recall  f1-score   support
+ not_smoking       0.83      0.84      0.84       439    not_smoking       0.82      0.85      0.83       227
+     smoking       0.88      0.87      0.87       571        smoking       0.87      0.85      0.86       281
 
-    accuracy                           0.86       651
-   macro avg       0.86      0.86      0.86       651
-weighted avg       0.87      0.86      0.86       651
-
-# model 3
-              precision    recall  f1-score   support
- not_smoking       0.83      0.84      0.84       439
-     smoking       0.88      0.87      0.87       571
-
-    accuracy                           0.86      1010
-   macro avg       0.85      0.85      0.85      1010
-weighted avg       0.86      0.86      0.86      1010
-
-# model 4
- not_smoking       0.82      0.85      0.83       227
-     smoking       0.87      0.85      0.86       281
-
-    accuracy                           0.85       508
-   macro avg       0.85      0.85      0.85       508
-weighted avg       0.85      0.85      0.85       508
+    accuracy                           0.86      1010       accuracy                           0.85       508
+   macro avg       0.85      0.85      0.85      1010      macro avg       0.85      0.85      0.85       508
+weighted avg       0.86      0.86      0.86      1010   weighted avg       0.85      0.85      0.85       508
 
 
 '''

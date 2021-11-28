@@ -25,7 +25,7 @@ for i, imagePath in enumerate(imagePaths):
         else:
             percent = size/img.shape[0]
 
-        img = cv2.resize(img, dsize=(0, 0), fx=percent, fy=percent, interpolation=cv2.INTER_LINEAR)
+        img = cv2.resize(img, dsize=(0, 0), fx=percent, fy=percent, interpolation=cv2.INTER_LINEAR) # 양 선형 보간법
 
     # 이미지 범위 지정
     y, x, h, w = (0, 0, img.shape[0], img.shape[1])

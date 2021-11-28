@@ -45,7 +45,7 @@ frame_count = 0
 # 동영상 파일 읽고 쓰기(웹캠 입력만 테스트)
 cap = choose_run_mode(args)  # cap 객체에 choose_run_mode 파싱
 
-'''
+
 # padding 된 폴더 경로
 filepath = "C:\\Users\\haram\\PycharmProjects\\OpenBankProject\\2"
 # filepath = "C:\\Users\\haram\\PycharmProjects\\OpenBankProject\\1024data\\test"
@@ -137,3 +137,4 @@ while cv.waitKey(1) < 0: #키가 입력될때까지 반복
         cv.imshow('Action Recognition based on OpenPose', show)  # 창 이름
 
 cap.release()  # cap 비디오 객체 해제
+'''
