@@ -5,6 +5,9 @@ import numpy as np  # numpy 별명 np사용 다차원 배열 사용을 위해
 import time  # time() 함수, strftime() 함수 , lovaltime() 함수 사용 시간관련 함수
 import os
 import socket
+
+from imutils import paths
+
 from utils import choose_run_mode, load_pretrain_model # utils.py파일에 3개 함수 가져오기
 from Pose.pose_visualizer import TfPoseVisualizer  # pose파일 밑에 pose에있는 pose_visualizer 중에서 TfPoseVisualizer클래스 가져옴
 from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
@@ -15,7 +18,7 @@ HOST = '36.38.61.187'
 PORT = 8888
 
 # model 4
-smoke = load_model('Model/smoking_add_skeleton_dataset_delete.model')
+smoke = load_model('Model/4.model')
 
 # ArgumentParser에 원하는 description을 입력하여 parser객체 생성
 parser = argparse.ArgumentParser(description='Action Recognition by OpenPose')  # openpose에 의한 작업 인식?
@@ -42,6 +45,29 @@ frame_count = 0
 # 동영상 파일 읽고 쓰기(웹캠 입력만 테스트)
 cap = choose_run_mode(args)  # cap 객체에 choose_run_mode 파싱
 
+'''
+# padding 된 폴더 경로
+filepath = "C:\\Users\\haram\\PycharmProjects\\OpenBankProject\\2"
+# filepath = "C:\\Users\\haram\\PycharmProjects\\OpenBankProject\\1024data\\test"
+imagePaths = list(paths.list_images(filepath))
+
+# "\\" --> "/"
+for i in range(len(imagePaths)):
+    imagePaths[i] = imagePaths[i].replace("\\", "/")
+
+for i, imagePath in enumerate(imagePaths):
+    # print('imagePath', imagePath)  # OpenBankProject/1024data/2/bb0695.jpg
+    save_dicname = imagePath.split("/")
+    # print('save_dicname', save_dicname)  # 'OpenBankProject', '1024data', '2', 'bb0695.jpg']
+    save_filename = "/".join(save_dicname[:-2]) + '/3/' + save_dicname[-1]
+    # print('save_filename', save_filename)  # OpenBankProject/1024data/3/bb0695.jpg
+    estimator = load_pretrain_model('VGG_origin')  # 훈련 모델 로드(VGG_origin) 분류??
+    # print('estimator', estimator.graph_path)
+    show = cv.imread(imagePath)
+    humans = estimator.inference(show)
+    pose = TfPoseVisualizer.draw_pose_rgb(show, humans)
+    cv.imwrite(save_filename, show)
+'''
 while cv.waitKey(1) < 0: #키가 입력될때까지 반복
     data = []
     has_frame, show = cap.read()  # has_frame 과 show에 비디오를 한프레임씩 읽음 성공시 True, 실패시 False
@@ -57,7 +83,6 @@ while cv.waitKey(1) < 0: #키가 입력될때까지 반복
         image = img_to_array(show)  # image (450, 300, 3)
         image = cv.resize(image, dsize=(224, 224),
                           interpolation=cv.INTER_NEAREST)  # 이웃 보간법 사용
-        # > 이웃 보간법으로 수정
 
         image = preprocess_input(image)
         data.append(image)
@@ -74,14 +99,12 @@ while cv.waitKey(1) < 0: #키가 입력될때까지 반복
             s.connect((HOST, PORT))
 
             cv.putText(show, str(i), (pose[2][i][0], pose[2][i][1]), cv.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 3)
-
             if predIdxs == 1:
-                msg = "1"  # exec(open("test4.py 1"))
+                msg = "1"
                 s.send(msg.encode(encoding='utf_8', errors='strict'))
                 data = s.recv(1024)
                 print('인공지능이 ' + str(i) + '번째 객체가 흡연 중인 것을 탐지했습니다. \n관리자에게 \'' + data.decode() + '\'를 전송합니다.')
                 s.close()
-
             # elif predIdxs == 0:
             #     msg = "0"  # exec(open("test4.py 0"))
             #     s.send(msg.encode(encoding='utf_8', errors='strict'))

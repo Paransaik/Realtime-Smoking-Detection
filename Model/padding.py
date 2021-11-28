@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 from imutils import paths
 
-filepath = "C:\\Users\\haram\\PycharmProjects\\OpenBankProject\\1024data\\1"
+filepath = "C:\\Users\\haram\\PycharmProjects\\OpenBankProject\\1"
 imagePaths = list(paths.list_images(filepath))
 
 size = 500

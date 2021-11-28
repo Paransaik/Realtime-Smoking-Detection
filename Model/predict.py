@@ -44,18 +44,48 @@ len(testX)	651
 len(imagePaths) 3254
 '''
 '''
-              precision    recall  f1-score   support
 
+
+# model 1
+              precision    recall  f1-score   support
  not_smoking       0.79      0.82      0.81       255
      smoking       0.88      0.86      0.87       396
 
     accuracy                           0.85       651
    macro avg       0.84      0.84      0.84       651
 weighted avg       0.85      0.85      0.85       651
+
+# model 2
+ not_smoking       0.82      0.83      0.83       255
+     smoking       0.89      0.89      0.89       396
+
+    accuracy                           0.86       651
+   macro avg       0.86      0.86      0.86       651
+weighted avg       0.87      0.86      0.86       651
+
+# model 3
+              precision    recall  f1-score   support
+ not_smoking       0.83      0.84      0.84       439
+     smoking       0.88      0.87      0.87       571
+
+    accuracy                           0.86      1010
+   macro avg       0.85      0.85      0.85      1010
+weighted avg       0.86      0.86      0.86      1010
+
+# model 4
+ not_smoking       0.82      0.85      0.83       227
+     smoking       0.87      0.85      0.86       281
+
+    accuracy                           0.85       508
+   macro avg       0.85      0.85      0.85       508
+weighted avg       0.85      0.85      0.85       508
+
+
 '''
+
 def run():
     dataset_path = './1024data/after'
-    model_store_dir = 'smoking_add_skeleton.model'
+    model_store_dir = '2.model'
 
     BS = 32
 
@@ -77,7 +107,7 @@ def run():
     print(data.shape)  # (3254, 224, 224, 3)
     print(type(data))
 
-    model = load_model('./case3/smoking_detector2.model')  #, custom_objects={"InstanceNormalization": InstanceNormalization}
+    model = load_model('./case3/1.model')  #, custom_objects={"InstanceNormalization": InstanceNormalization}
 
     predIdxs = model.predict(data, batch_size=BS)
     predIdxs = np.argmax(predIdxs, axis=1)  # 행으로 > 3254, 224, 3

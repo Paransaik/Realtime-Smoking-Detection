@@ -49,7 +49,6 @@ from tensorflow.python.client import device_lib
 #     raise SystemError('GPU device not found')
 # print('Found GPU at: {}'.format(device_name))
 
-
 # def get_available_devices():
 #     local_device_protos = device_lib.list_local_devices()
 #     return [x.name for x in local_device_protos]
@@ -63,7 +62,7 @@ from tensorflow.python.client import device_lib
 
 def run():
     dataset_path = './1024data/'
-    model_store_dir = 'smoking_add_skeleton.model'
+    model_store_dir = '2.model'
 
     INIT_LR = 1e-4
     EPOCHS = 100
@@ -120,7 +119,7 @@ def run():
     for layer in baseModel.layers:
         layer.trainable = False
     opt = Adam(lr=INIT_LR, decay=INIT_LR / EPOCHS)
-    model.compile(loss="binary_crossentropy", optimizer=opt,metrics=["accuracy"])
+    model.compile(loss="binary_crossentropy", optimizer=opt, metrics=["accuracy"])
 
     print('textX', testX.shape)       # textX (651, 224, 224, 3)
     print(len(testX))                 # 651
