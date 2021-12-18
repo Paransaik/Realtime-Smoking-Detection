@@ -45,29 +45,6 @@ frame_count = 0
 # 동영상 파일 읽고 쓰기(웹캠 입력만 테스트)
 cap = choose_run_mode(args)  # cap 객체에 choose_run_mode 파싱
 
-
-# padding 된 폴더 경로
-filepath = "C:\\Users\\haram\\PycharmProjects\\OpenBankProject\\2"
-# filepath = "C:\\Users\\haram\\PycharmProjects\\OpenBankProject\\1024data\\test"
-imagePaths = list(paths.list_images(filepath))
-
-# "\\" --> "/"
-for i in range(len(imagePaths)):
-    imagePaths[i] = imagePaths[i].replace("\\", "/")
-
-for i, imagePath in enumerate(imagePaths):
-    # print('imagePath', imagePath)  # OpenBankProject/1024data/2/bb0695.jpg
-    save_dicname = imagePath.split("/")
-    # print('save_dicname', save_dicname)  # 'OpenBankProject', '1024data', '2', 'bb0695.jpg']
-    save_filename = "/".join(save_dicname[:-2]) + '/3/' + save_dicname[-1]
-    # print('save_filename', save_filename)  # OpenBankProject/1024data/3/bb0695.jpg
-    estimator = load_pretrain_model('VGG_origin')  # 훈련 모델 로드(VGG_origin) 분류??
-    # print('estimator', estimator.graph_path)
-    show = cv.imread(imagePath)
-    humans = estimator.inference(show)
-    pose = TfPoseVisualizer.draw_pose_rgb(show, humans)
-    cv.imwrite(save_filename, show)
-'''
 while cv.waitKey(1) < 0: #키가 입력될때까지 반복
     data = []
     has_frame, show = cap.read()  # has_frame 과 show에 비디오를 한프레임씩 읽음 성공시 True, 실패시 False
@@ -137,4 +114,3 @@ while cv.waitKey(1) < 0: #키가 입력될때까지 반복
         cv.imshow('Action Recognition based on OpenPose', show)  # 창 이름
 
 cap.release()  # cap 비디오 객체 해제
-'''
