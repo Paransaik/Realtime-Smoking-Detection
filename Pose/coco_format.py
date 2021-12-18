@@ -1,9 +1,8 @@
 from enum import Enum
 
-# https://east-rain.github.io/docs/Deep%20Learning/Openpose/openpose.html
 
 class CocoPart(Enum):
-    Nose = 0 #코
+    Nose = 0 #코   19개
     Neck = 1 #목
     RShoulder = 2 #오른쪽 어깨
     RElbow = 3 #오른쪽 상박
@@ -22,9 +21,8 @@ class CocoPart(Enum):
     REar = 16 #오른쪽 귀
     LEar = 17 #왼쪽 귀
     Background = 18 #백그라운드?
-#19
-#부위별 연결
-CocoPairs = [(1, 2), #nose = 0 ?
+
+CocoPairs = [(1, 2),  #19개
              (1, 5),
              (2, 3),
              (3, 4),
@@ -46,7 +44,7 @@ CocoPairs = [(1, 2), #nose = 0 ?
 CocoPairsRender = CocoPairs[:-2]
 
 
-CocoPairsNetwork = [(12, 13),
+CocoPairsNetwork = [(12, 13),   #19개
                     (20, 21),
                     (14, 15),
                     (16, 17),
@@ -65,7 +63,8 @@ CocoPairsNetwork = [(12, 13),
                     (36, 37),
                     (18, 19),
                     (26, 27)]  # = 19
-#포인트 색깔
+
+
 CocoColors = [[0, 100, 255],  #1코        #연한파랑 18개
               [0, 100, 255],  #2목        #연한파랑
               [0, 255, 255],  #3오른팔상 #사인색
@@ -85,24 +84,4 @@ CocoColors = [[0, 100, 255],  #1코        #연한파랑 18개
               [200, 200, 0],  #황갈색
               [0, 0, 0]] #흰색
 
-'''
-CocoColors = [[0, 100, 255],
-              [0, 100, 255],
-              [0, 255, 255],
-              [0, 100, 255],
-              [0, 255, 255],
-              [0, 100, 255],
-              [0, 255, 0],
-              [255, 200, 100],
-              [255, 0, 255],
-              [0, 255, 0],
-              [255, 200, 100],
-              [255, 0, 255],
-              [0, 0, 255],
-              [255, 0, 0],
-              [200, 200, 0],
-              [255, 0, 0],
-              [200, 200, 0],
-              [0, 0, 0]]
-'''
 
